@@ -7,35 +7,33 @@ import java.util.Queue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 
-public class MyOwnBlockingQueue implements BlockingQueue<String> {
+public class MyOwnBlockingQueue<T> implements BlockingQueue<T> {
 
-    private boolean blocked;//=false;
-    private Queue<String> queue;
+    private Queue<T> queue;
     private int size;
 
 
-    public MyOwnBlockingQueue(int size){
-        this.blocked=false;
-        this.queue=new ArrayDeque<>(size);
-        this.size=size;
+    public MyOwnBlockingQueue(int size) {
+        this.queue = new ArrayDeque<>(size);
+        this.size = size;
     }
 
     @Override
-    public  synchronized void put(String s) throws InterruptedException {
-        while(blocked==true || queue.size()>=size){
+    public synchronized void put(T s) throws InterruptedException {
+        while (queue.size() >= size) {
             try {
                 wait();
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }
         }
-        boolean result=this.queue.add(s);
+        boolean result = this.queue.add(s);
         notifyAll();
     }
 
     @Override
-    public synchronized String take() throws InterruptedException {
-        while(blocked==true || queue.isEmpty()){
+    public synchronized T take() throws InterruptedException {
+        while (queue.isEmpty()) {
             try {
                 wait();
             } catch (InterruptedException e) {
@@ -48,55 +46,53 @@ public class MyOwnBlockingQueue implements BlockingQueue<String> {
 
     @Override
     public synchronized int size() {
-        if(queue==null){return 0;}
-        else{
+        if (queue == null) {
+            return 0;
+        } else {
             return queue.size();
         }
     }
 
     @Override
-    public boolean add(String s) {
-       throw new UnsupportedOperationException();
-    }
-
-
-
-    @Override
-    public boolean offer(String s) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public String remove() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public String poll() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public String element() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public String peek() {
+    public boolean add(T s) {
         throw new UnsupportedOperationException();
     }
 
 
+    @Override
+    public boolean offer(T s) {
+        throw new UnsupportedOperationException();
+    }
 
     @Override
-    public boolean offer(String s, long timeout, TimeUnit unit) throws InterruptedException {
+    public T remove() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public T poll() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public T element() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public T peek() {
         throw new UnsupportedOperationException();
     }
 
 
+    @Override
+    public boolean offer(T s, long timeout, TimeUnit unit) throws InterruptedException {
+        throw new UnsupportedOperationException();
+    }
+
 
     @Override
-    public String poll(long timeout, TimeUnit unit) throws InterruptedException {
+    public T poll(long timeout, TimeUnit unit) throws InterruptedException {
         throw new UnsupportedOperationException();
     }
 
@@ -116,7 +112,7 @@ public class MyOwnBlockingQueue implements BlockingQueue<String> {
     }
 
     @Override
-    public boolean addAll(Collection<? extends String> c) {
+    public boolean addAll(Collection<? extends T> c) {
         throw new UnsupportedOperationException();
     }
 
@@ -136,7 +132,6 @@ public class MyOwnBlockingQueue implements BlockingQueue<String> {
     }
 
 
-
     @Override
     public boolean isEmpty() {
         throw new UnsupportedOperationException();
@@ -148,7 +143,17 @@ public class MyOwnBlockingQueue implements BlockingQueue<String> {
     }
 
     @Override
-    public Iterator<String> iterator() {
+    public int drainTo(Collection<? super T> collection) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public int drainTo(Collection<? super T> collection, int i) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Iterator<T> iterator() {
         throw new UnsupportedOperationException();
     }
 
@@ -162,13 +167,4 @@ public class MyOwnBlockingQueue implements BlockingQueue<String> {
         throw new UnsupportedOperationException();
     }
 
-    @Override
-    public int drainTo(Collection<? super String> c) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public int drainTo(Collection<? super String> c, int maxElements) {
-        throw new UnsupportedOperationException();
-    }
 }

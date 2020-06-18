@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 public class Magazine {
 
     public static void main(String[] args) throws InterruptedException {
-        BlockingQueue<String> queue = new MyOwnBlockingQueue(10);
+        BlockingQueue<String> queue = new MyOwnBlockingQueue<String>(10);
 //        BlockingQueue<String> queue = new ArrayBlockingQueue(10);
 //        Queue<String> queue=new ArrayDeque<>(10);
         int numbersOfThreads = 5;
